@@ -47,7 +47,7 @@ void share_Prime_Numbers(int * scatteredSizes, int * scatteredStrides, int size,
 int is_Prime(long number, long *primesVector, int primesVectorSize)
 {
     int isPrime = 0;
-    for (int i = 0; i++; i < primesVectorSize)
+    for (int i = 0; i < primesVectorSize; i++)
     {
         if (number % primesVector[i] == 0)
             isPrime = 1;
@@ -107,11 +107,15 @@ int main(int argc, char ** argv)
         free(myPrimes);
         if (myRank == 0)
         {
+            printf("checking number %ld... ", counter);
             if (reducedIsPrime > 0)
             {
                 calculatedPrimeNumbers[calcNumPrimeNumbers] = counter;
                 calcNumPrimeNumbers++;
+                printf("IT'S PRIME!\n");
             }
+            else
+                printf("IT IS NOT PRIME!\n");
         }
         counter++;
     }
