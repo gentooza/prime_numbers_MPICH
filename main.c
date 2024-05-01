@@ -44,15 +44,15 @@ void share_Prime_Numbers(int * scatteredSizes, int * scatteredStrides, int size,
     return;
 }
 
-int is_Prime(long number, long *primesVector, int primesVectorSize)
+int is_NotPrime(long number, long *primesVector, int primesVectorSize)
 {
-    int isPrime = 0;
+    int isNotPrime = 0;
     for (int i = 0; i < primesVectorSize; i++)
     {
         if (number % primesVector[i] == 0)
-            isPrime = 1;
+            isNotPrime = 1;
     }
-    return isPrime;
+    return isNotPrime;
 }
 
 int main(int argc, char ** argv)
@@ -100,29 +100,25 @@ int main(int argc, char ** argv)
         MPI_Scatterv(calculatedPrimeNumbers, scatteredSizes, scatteredStrides, MPI_LONG, myPrimes, localNumberOfPrimes, MPI_LONG, 
                                                               0, MPI_COMM_WORLD);
         MPI_Bcast( &counter, 1, MPI_LONG, 0, MPI_COMM_WORLD);
-        int isPrime = is_Prime(counter, &myPrimes[0], localNumberOfPrimes);
-        int reducedIsPrime;
-        MPI_Reduce(&isPrime, &reducedIsPrime, 1, MPI_INT, MPI_SUM, 0,
+        int isNotPrime = is_NotPrime(counter, &myPrimes[0], localNumberOfPrimes);
+        int redIsNotPrime;
+        MPI_Reduce(&isNotPrime, &redIsNotPrime, 1, MPI_INT, MPI_SUM, 0,
            MPI_COMM_WORLD);
         free(myPrimes);
         if (myRank == 0)
         {
-            printf("checking number %ld... ", counter);
-            if (reducedIsPrime > 0)
+            if (redIsNotPrime == 0)
             {
                 calculatedPrimeNumbers[calcNumPrimeNumbers] = counter;
                 calcNumPrimeNumbers++;
-                printf("IT'S PRIME!\n");
             }
-            else
-                printf("IT IS NOT PRIME!\n");
         }
         counter++;
     }
     if (myRank == 0)
     {
         printf("the prime numbers calculated are: ");
-        for (long j = 0; j++; j < calcNumPrimeNumbers)
+        for (long j = 0; j < calcNumPrimeNumbers; j++)
             printf("%ld, ", calculatedPrimeNumbers[j]);
         free(calculatedPrimeNumbers);
     }
