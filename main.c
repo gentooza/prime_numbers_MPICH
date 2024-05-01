@@ -57,8 +57,7 @@ int is_NotPrime(long number, long *primesVector, int primesVectorSize)
 
 int main(int argc, char ** argv)
 {
-
-    
+    double start, end;    
     if (argc != 2) 
     {
         fprintf(stderr, "Debes indicar el número de números primos a calcular: prime_numbers <cantidad de números primos a calcular>\n");
@@ -83,13 +82,10 @@ int main(int argc, char ** argv)
     {
         calculatedPrimeNumbers = malloc(sizeof(long)*numPrimeNumbers);
         calculatedPrimeNumbers[0] = 2;
-        calculatedPrimeNumbers[1] = 3;
-        calculatedPrimeNumbers[2] = 5;
-        calculatedPrimeNumbers[3] = 7;
-        calculatedPrimeNumbers[4] = 11;
+        start = MPI_Wtime();
     }
-    long calcNumPrimeNumbers = 5;
-    long counter = 12;
+    long calcNumPrimeNumbers = 1;
+    long counter = 3;
     long * myPrimes;
     while (calcNumPrimeNumbers < numPrimeNumbers)
     {
@@ -117,10 +113,13 @@ int main(int argc, char ** argv)
     }
     if (myRank == 0)
     {
+        end = MPI_Wtime();
         printf("the prime numbers calculated are: ");
         for (long j = 0; j < calcNumPrimeNumbers; j++)
             printf("%ld, ", calculatedPrimeNumbers[j]);
+        printf("\nConsumed time: %f\n", end - start);
         free(calculatedPrimeNumbers);
+
     }
     MPI_Finalize();
 
