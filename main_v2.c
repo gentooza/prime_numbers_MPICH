@@ -23,36 +23,36 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <stdio.h>
 #include <stdlib.h>
 
-void share_Prime_Numbers(int * scatteredSizes, int * scatteredStrides, int size, long calcNumPrimeNumbers)
+void sharePrimeNumbers(int * _scatteredsizes, int * _scatteredstrides, int _size, long _primesnumbers)
 {
-    if (size > 0 && calcNumPrimeNumbers > 0)
+    if (_size > 0 && _primenumbers > 0)
     {
         int added = 0;
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < _size; i++)
         {
-            int addedToThis = 0;
-            if ((calcNumPrimeNumbers - added) % size != 0)
-                addedToThis = 1;
-            scatteredSizes[i] = calcNumPrimeNumbers / size + addedToThis;
+            int addedtothis = 0;
+            if ((_primesnumbers - added) % _size != 0)
+                addedtothis = 1;
+            _scatteredsizes[i] = _primesnumbers / _size + addedtothis;
             if (i == 0)
-                scatteredStrides[i] = 0;
+                _scatteredstrides[i] = 0;
             else
-                scatteredStrides[i] = scatteredSizes[i - 1] + scatteredStrides[i - 1];
-            added += addedToThis;
+                _scatteredstrides[i] = _scatteredsizes[i - 1] + _scatteredstrides[i - 1];
+            added += addedtothis;
         }
     }
     return;
 }
 
-int is_NotPrime(long number, long *primesVector, int primesVectorSize)
+int isNotPrime(long _number, long *_primesvector, int _primesvectorsize)
 {
-    int isNotPrime = 0;
-    for (int i = 0; i < primesVectorSize; i++)
+    int notprime = 0;
+    for (int i = 0; i < _primesvectorsize && !notprime; i++)
     {
-        if (number % primesVector[i] == 0)
-            isNotPrime = 1;
+        if (_number % _primesvector[i] == 0)
+            notprime = 1;
     }
-    return isNotPrime;
+    return notprime;
 }
 
 int main(int argc, char ** argv)
