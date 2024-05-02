@@ -88,9 +88,9 @@ int main(int argc, char ** argv)
     long new_calcNumPrimeNumbers = 1;
     long counter = 3;
     long * myPrimes = NULL;
+    int localNumberOfPrimes = 0;
     while (new_calcNumPrimeNumbers < numPrimeNumbers)
     {
-        int localNumberOfPrimes = 0;
         if(new_calcNumPrimeNumbers != calcNumPrimeNumbers)
         {
             if (myPrimes != NULL)
