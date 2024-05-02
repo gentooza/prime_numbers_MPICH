@@ -4,7 +4,7 @@ Cálculo de números primos con MPICH // Prime numbers calculation using MPICH
 ## Purpose and Algorithm
 
 <img src="algorithm.png" alt="Schema"
-    title="Prime numbers algorithm used" width="500"/>
+    title="Prime numbers algorithm used" width="600"/>
 
 La idea es implementar este algoritmo de cálculo de números primos en programación distribuida empleando la librería MPICH.
 
@@ -14,29 +14,29 @@ Irá preguntando por los siguientes números que se calculen a cada nodo (con un
 
 ## Files
 
-### main_oneprocess.c
+### main_one.c
 
 Es el algoritmo, empleando MPICH pero sin dividir el trabajo, un solo proceso almacena el vector de números primos y ejecuta el cálculo.
 
 Los pasos para compilarlo y ejecutarlo serían:
 
 ```
-mpicc -o ./primes_one ./main_oneprocess.c
+mpicc -o ./primes_one ./main_one.c
 mpirun -np 1 ./primes_one
 ```
 
-### main.c
+### main_v1.c
 
 Es el algoritmo, empleando MPICH dividiendo el vector de números primos calculados y el trabajo para comprobar si un nuevo número es o no primo dividiéndolo por ese vector.
 
 Los pasos para compilarlo y ejecutarlo serían:
 
 ```
-mpicc -o ./primes_v1 ./main.c
+mpicc -o ./primes_v1 ./main_v1.c
 mpirun -f ./machinefile ./primes_v1
 ```
 
-### main_oprimized.c
+### main_v2.c
 
 Es el algoritmo, empleando MPICH dividiendo el vector de números primos calculados y el trabajo para comprobar si un nuevo número es o no primo dividiéndolo por ese vector.
 
@@ -45,7 +45,7 @@ Lo optimizamos un poco, no hay que volver a calcular el vector local de números
 Los pasos para compilarlo y ejecutarlo serían:
 
 ```
-mpicc -o ./primes_v2 ./main_optimized.c
+mpicc -o ./primes_v2 ./main_v2.c
 mpirun -f ./machinefile ./primes_v2
 ```
 
