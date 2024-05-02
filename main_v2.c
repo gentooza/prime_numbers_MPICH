@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 void sharePrimeNumbers(int * _scatteredsizes, int * _scatteredstrides, int _size, long _primesnumbers)
 {
-    if (_size > 0 && _primenumbers > 0)
+    if (_size > 0 && _primesnumbers > 0)
     {
         int added = 0;
         for (int i = 0; i < _size; i++)
@@ -96,21 +96,21 @@ int main(int argc, char ** argv)
             if (myPrimes != NULL)
                 free(myPrimes);
             calcNumPrimeNumbers = new_calcNumPrimeNumbers;
-            share_Prime_Numbers(&scatteredSizes[0], &scatteredStrides[0], size, calcNumPrimeNumbers);
+            sharePrimeNumbers(&scatteredSizes[0], &scatteredStrides[0], size, calcNumPrimeNumbers);
             MPI_Scatter(scatteredSizes, 1, MPI_INT, &localNumberOfPrimes, 1, MPI_INT, 0, MPI_COMM_WORLD);
             myPrimes = malloc(sizeof(long)*localNumberOfPrimes);
             MPI_Scatterv(calculatedPrimeNumbers, scatteredSizes, scatteredStrides, MPI_LONG, myPrimes, localNumberOfPrimes, MPI_LONG, 
                                                               0, MPI_COMM_WORLD);
         }
         MPI_Bcast( &counter, 1, MPI_LONG, 0, MPI_COMM_WORLD);
-        int isNotPrime = is_NotPrime(counter, &myPrimes[0], localNumberOfPrimes);
-        int redIsNotPrime;
-        MPI_Reduce(&isNotPrime, &redIsNotPrime, 1, MPI_INT, MPI_SUM, 0,
+        int notPrime = isNotPrime(counter, &myPrimes[0], localNumberOfPrimes);
+        int redNotPrime;
+        MPI_Reduce(&notPrime, &redNotPrime, 1, MPI_INT, MPI_SUM, 0,
            MPI_COMM_WORLD);
 
         if (myRank == 0)
         {
-            if (redIsNotPrime == 0)
+            if (redNotPrime == 0)
             {
                 calculatedPrimeNumbers[calcNumPrimeNumbers] = counter;
                 new_calcNumPrimeNumbers++;
