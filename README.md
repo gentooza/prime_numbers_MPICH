@@ -49,6 +49,19 @@ mpicc -o ./primes_v2 ./main_v2.c
 mpirun -f ./machinefile ./primes_v2
 ```
 
+### main_v3.c
+
+Lo optimizamos un poco más aún, el reparto de un nuevo número primo lo conoce todos los nodos al empezar este reparto en 0 y recorrerse en el tamaño del clúster.
+
+Todos los nodos saben si un nuevo número es primo o no, porque el cálculo lo hacemos con un allreduce, de forma que si hay un nuevo número primo, el nodo 0 se encarga de actualizarle a otro nodo su vector de números primos.
+
+Los pasos para compilarlo y ejecutarlo serían:
+
+```
+mpicc -o ./primes_v3 ./main_v3.c
+mpirun -f ./machinefile ./primes_v3
+```
+
 ## Copyright
 
 2024 Joaquín Cuéllar \<joaquin.cuellar(at)uco(dot)es\>
