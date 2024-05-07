@@ -85,7 +85,6 @@ int main(int argc, char ** argv)
 
     while (totalPrimeNumbersIndex < numPrimeNumbers)
     {
-        MPI_Bcast( &counter, 1, MPI_LONG, 0, MPI_COMM_WORLD);
         int noPrime = isNotPrime(counter, &nodePrimeNumbers[0], nodePrimeNumberSize);
         int redNoPrime;
         MPI_Allreduce(&noPrime, &redNoPrime, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
