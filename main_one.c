@@ -27,7 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 int is_NotPrime(long number, long *primesVector, int primesVectorSize)
 {
     int isNotPrime = 0;
-    for (int i = 0; i < primesVectorSize; i++)
+    for (int i = 0; i < primesVectorSize && !isNotPrime; i++)
     {
         if (number % primesVector[i] == 0)
             isNotPrime = 1;
